@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_lab_2_26022021/pages/drawer/widgets/settings_view.dart';
+//import 'package:flutter_lab_2_26022021/pages/drawer/widgets/settings_view.dart';
+import 'settings_view.dart';
 
 class DrawerWidget extends StatelessWidget {
   @override

@@ -5,7 +5,7 @@ class SettingsView extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    throw UnimplementedError();
+    return SettingsViewState();
   }
 }
 
