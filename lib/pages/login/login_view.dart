@@ -26,16 +26,16 @@ class _LoginViewState extends State<LoginView> {
                 color: Colors.white,
               ),
             ),
-            Positioned.fill(
-              child: ListView(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(20.0),
-                    constraints: BoxConstraints(
-                        //minHeight: constraints.maxHeight,
-                        ),
+            ListView(
+              padding: EdgeInsets.only(top: 0),
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(20.0),
+                  constraints: BoxConstraints(
+                    //minHeight: constrains.maxHeight,
+                    minHeight: 40,
                   ),
-                  Center(
+                  child: Center(
                     child: Column(
                       children: [
                         Container(
@@ -52,6 +52,9 @@ class _LoginViewState extends State<LoginView> {
                                       //TODO tiến hành xử lí đăng nhập ở đây
                                       print('$email, $password');
                                     },
+                                    onResetPressed: (email) {
+                                      print('$email');
+                                    },
                                   ),
                                 ],
                               ),
@@ -61,8 +64,8 @@ class _LoginViewState extends State<LoginView> {
                       ],
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ],
         ),

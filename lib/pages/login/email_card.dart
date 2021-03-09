@@ -4,9 +4,14 @@ import 'package:flutter/material.dart';
 enum EmailCardStatus { login, reset }
 
 class EmailCard extends StatefulWidget {
+  //Đăng nhập
   final void Function(String email, String password) onLoginPressed;
 
-  const EmailCard({Key key, this.onLoginPressed}) : super(key: key);
+  //Khôi phục mật khẩu
+  final void Function(String email) onResetPressed;
+
+  const EmailCard({Key key, this.onLoginPressed, this.onResetPressed})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _EmailCardState();
@@ -52,10 +57,11 @@ class _EmailCardState extends State<EmailCard> {
                 decoration: InputDecoration(
                     labelText: 'Mật khẩu', icon: Icon(Icons.security)),
                 obscureText: true,
+                //dùng để che mật khẩu.
                 validator: (value) {
                   if (value.length < 6) return 'Mật khẩu không hợp lệ';
                   return null;
-                }, //dùng để che mật khẩu.
+                },
               ),
               SizedBox(
                 height: 20,
@@ -65,9 +71,11 @@ class _EmailCardState extends State<EmailCard> {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      final _email = _emailKey.currentState.value;
-                      final _password = _passwordKey.currentState.value;
-                      widget.onLoginPressed(_email, _password);
+                      if (_passwordKey.currentState.validate()) {
+                        final _email = _emailKey.currentState.value;
+                        final _password = _passwordKey.currentState.value;
+                        widget.onLoginPressed(_email, _password);
+                      }
                     },
                     child: Text('Đăng nhập'),
                   ),
@@ -95,15 +103,33 @@ class _EmailCardState extends State<EmailCard> {
                   ),
                 ),
                 TextFormField(
-                  key: Key('email'),
+                  key: _emailKey,
                   decoration: InputDecoration(
-                      labelText: 'Email', icon: Icon(Icons.email_outlined)),
+                    labelText: 'Email',
+                    icon: Icon(Icons.email_outlined),
+                  ),
+                  validator: (value) {
+                    bool emailValid = RegExp(
+                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|Ư~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                        .hasMatch(value ?? '');
+                    if (!emailValid) return 'Email không hợp lệ';
+                    return null;
+                  },
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
+                    // ElevatedButton(
+                    //   onPressed: () {},
+                    //   child: Text('Khôi phục'),
+                    // ),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        if (_emailKey.currentState.validate()) {
+                          final _email = _emailKey.currentState.value;
+                          widget.onResetPressed(_email);
+                        }
+                      },
                       child: Text('Khôi phục'),
                     ),
                     SizedBox(
